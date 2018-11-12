@@ -14,6 +14,12 @@ import javax.swing.JOptionPane;
 
 public class addProduct extends javax.swing.JFrame {
 
+    private String host = "jdbc:derby://localhost:1527/bloodbank";
+    private String user = "nbuser";
+    private String password = "nbuser";
+    private String tableName = "Product";
+    private Connection conn;
+    private PreparedStatement stmt;
     /**
      * Creates new form addProduct
      */
@@ -73,6 +79,11 @@ public class addProduct extends javax.swing.JFrame {
 
         buttonGroupType.add(jRBDeco);
         jRBDeco.setText("Decorations");
+        jRBDeco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBDecoActionPerformed(evt);
+            }
+        });
 
         jLabelProductType.setText(" Type: ");
 
@@ -182,10 +193,36 @@ public class addProduct extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
-         try{
+        String insertStr = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?, ?)";
+         try {
+            stmt = conn.prepareStatement(insertStr);
+            //stmt.setString(1, donor.getDonorID());
+            stmt.setString(1, 'P00002');
+            
+            stmt.setString(2, jTFName.getText());
+            stmt.setString(3, jTFDesc.getText());
+            stmt.setString(4, jTFPrice.getText());
+            stmt.setString(5, jTFQuantity.getText());
+            stmt.setString(6, buttonGroupType.getSelection().getActionCommand());
+            
+            
+            stmt.executeUpdate();
+        /*try{
             Connection con=DriverManager.getConnection("jdbc:derby://localhost:1527/FlowerOrderingSystem","nbuser","nbuser");
             Statement stmt=(Statement)con.createStatement();
             String sql = "INSERT INTO PRODUCT (productID, productName, productDescription, productPrice, productQuantity, productType) VALUES(?, ?, ?, ?, ?, ?)";
+            
+            String productID = "P00002";
+            String productName = jTFName.getText();
+            String productDescription = jTFDesc.getText();
+            String productPrice = jTFPrice.getText();
+            String productQuantity = jTFQuantity.getText();
+            String productType = buttonGroupType.getSelection().getActionCommand();
+            
+            
+            
+            
+            
             
             
             
@@ -196,11 +233,29 @@ public class addProduct extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Record has been saved!");
             conn.close();
-        }
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, ex);
+        }*/
+         } catch (SQLException e) {
+                while (e != null) {
+             String errorMessage = e.getMessage();
+             System.err.println("sql error message:" + errorMessage);
+
+             // This vendor-independent string contains a code.
+             String sqlState = e.getSQLState();
+             System.err.println("sql state:" + sqlState);
+
+             int errorCode = e.getErrorCode();
+             System.err.println("error code:" + errorCode);
+             // String driverName = conn.getMetaData().getDriverName();
+             // System.err.println("driver name:"+driverName);
+             // processDetailError(drivername, errorCode);
+             e = e.getNextException();
+           }
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jRBDecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBDecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRBDecoActionPerformed
 
     /**
      * @param args the command line arguments
