@@ -9,22 +9,35 @@ package flowerorderingsystem;
  *
  * @author wenyi
  */
+import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class addProduct extends javax.swing.JFrame {
 
-    private String host = "jdbc:derby://localhost:1527/bloodbank";
-    private String user = "nbuser";
-    private String password = "nbuser";
-    private String tableName = "Product";
-    private Connection conn;
-    private PreparedStatement stmt;
+    Connection conn;
+    PreparedStatement stmt;
+    ResultSet rs;
+    String host = "jdbc:derby://localhost:1527/FlowerOrderingSystem";
+    String user = "nbuser";
+    String pwd = "nbuser";
+    
+
     /**
      * Creates new form addProduct
      */
     public addProduct() {
         initComponents();
+        try{
+            conn = DriverManager.getConnection(host,user,pwd);
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+
+        
     }
 
     /**
@@ -193,64 +206,30 @@ public class addProduct extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
-        String insertStr = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?, ?)";
-         try {
-            stmt = conn.prepareStatement(insertStr);
-            //stmt.setString(1, donor.getDonorID());
-            stmt.setString(1, 'P00002');
-            
-            stmt.setString(2, jTFName.getText());
-            stmt.setString(3, jTFDesc.getText());
-            stmt.setString(4, jTFPrice.getText());
-            stmt.setString(5, jTFQuantity.getText());
-            stmt.setString(6, buttonGroupType.getSelection().getActionCommand());
-            
-            
-            stmt.executeUpdate();
-        /*try{
-            Connection con=DriverManager.getConnection("jdbc:derby://localhost:1527/FlowerOrderingSystem","nbuser","nbuser");
-            Statement stmt=(Statement)con.createStatement();
-            String sql = "INSERT INTO PRODUCT (productID, productName, productDescription, productPrice, productQuantity, productType) VALUES(?, ?, ?, ?, ?, ?)";
-            
+        
+        try{
             String productID = "P00002";
             String productName = jTFName.getText();
             String productDescription = jTFDesc.getText();
-            String productPrice = jTFPrice.getText();
-            String productQuantity = jTFQuantity.getText();
+            double productPrice = Double.parseDouble(jTFPrice.getText());
+            int productQuantity = Integer.parseInt(jTFQuantity.getText());
             String productType = buttonGroupType.getSelection().getActionCommand();
             
-            
-            
-            
-            
-            
-            
-            
-            
-             
-            
-            
-            
-            JOptionPane.showMessageDialog(null, "Record has been saved!");
-            conn.close();
-        }*/
-         } catch (SQLException e) {
-                while (e != null) {
-             String errorMessage = e.getMessage();
-             System.err.println("sql error message:" + errorMessage);
+        
+            String insertStr = "INSERT INTO PRODUCT VALUES(?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(insertStr);
+            stmt.setString(1, productID);
+            stmt.setString(2, productName);
+            stmt.setString(3, productDescription);
+            stmt.setDouble(4, productPrice);
+            stmt.setInt(5, productQuantity);
+            stmt.setString(6, productType);
+            stmt.executeUpdate();
 
-             // This vendor-independent string contains a code.
-             String sqlState = e.getSQLState();
-             System.err.println("sql state:" + sqlState);
-
-             int errorCode = e.getErrorCode();
-             System.err.println("error code:" + errorCode);
-             // String driverName = conn.getMetaData().getDriverName();
-             // System.err.println("driver name:"+driverName);
-             // processDetailError(drivername, errorCode);
-             e = e.getNextException();
-           }
-        }
+            //System.out.println(insertStr);
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }   
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jRBDecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBDecoActionPerformed
@@ -293,6 +272,10 @@ public class addProduct extends javax.swing.JFrame {
                 new addProduct().setVisible(true);
             }
         });
+        
+       
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
