@@ -18,11 +18,12 @@ import javax.swing.SwingUtilities;
 public class addProduct extends javax.swing.JFrame {
 
     Connection conn;
-    PreparedStatement stmt;
+    PreparedStatement stmt, stmt1;
     ResultSet rs;
     String host = "jdbc:derby://localhost:1527/FlowerOrderingSystem";
     String user = "nbuser";
     String pwd = "nbuser";
+    int productId = 10001;
     
 
     /**
@@ -208,7 +209,8 @@ public class addProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         try{
-            String productID = "P00002";
+            //String productID = "P00002";
+            
             String productName = jTFName.getText();
             String productDescription = jTFDesc.getText();
             double productPrice = Double.parseDouble(jTFPrice.getText());
@@ -217,14 +219,18 @@ public class addProduct extends javax.swing.JFrame {
             
         
             String insertStr = "INSERT INTO PRODUCT VALUES(?, ?, ?, ?, ?, ?)";
+            
             stmt = conn.prepareStatement(insertStr);
-            stmt.setString(1, productID);
+            
+            stmt.setString(1, 'P'+ String.format("%s", productId));
+            productId++;
             stmt.setString(2, productName);
             stmt.setString(3, productDescription);
             stmt.setDouble(4, productPrice);
             stmt.setInt(5, productQuantity);
             stmt.setString(6, productType);
             stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Product Added Successfully");
 
             //System.out.println(insertStr);
         }catch(Exception e) {
