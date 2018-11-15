@@ -99,8 +99,15 @@ public class SelectStyleArrangement extends JPanel
             
         };
         
+        ActionListener cancelListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+        
         confirm.addActionListener(confirmListener);
-        //cancel.addActionListener(cancelListener);
+        cancel.addActionListener(cancelListener);
  
         //Set up the picture label.
         picture = new JLabel(createImageIcon("/image/"
