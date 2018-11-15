@@ -9,14 +9,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
  
-/*
- * RadioButtonDemo.java requires these files:
- *   images/Bird.gif
- *   images/Cat.gif
- *   images/Dog.gif
- *   images/Rabbit.gif
- *   images/Pig.gif
- */
 public class SelectStyleArrangement extends JPanel
                              implements ActionListener {
     static String style1String = "style1";
@@ -51,6 +43,15 @@ public class SelectStyleArrangement extends JPanel
         JRadioButton style5Button = new JRadioButton(style5String);
         style5Button.setMnemonic(KeyEvent.VK_P);
         style5Button.setActionCommand(style5String);
+        
+        JButton confirm = new JButton("Confirm");
+        confirm.setMnemonic(KeyEvent.VK_P);
+        confirm.setActionCommand("Confirm");
+        
+        JButton cancel = new JButton("Cancel");
+        confirm.setMnemonic(KeyEvent.VK_P);
+        confirm.setActionCommand("Cancel");
+        
  
         //Group the radio buttons.
         ButtonGroup group = new ButtonGroup();
@@ -59,7 +60,10 @@ public class SelectStyleArrangement extends JPanel
         group.add(style3Button);
         group.add(style4Button);
         group.add(style5Button);
- 
+        
+        ButtonGroup group2 = new ButtonGroup();
+        group2.add(cancel);
+        group2.add(confirm);
         //Register a listener for the radio buttons.
         style1Button.addActionListener(this);
         style2Button.addActionListener(this);
@@ -72,11 +76,8 @@ public class SelectStyleArrangement extends JPanel
                                              + style1String
                                              + ".jpg"));
  
-        //The preferred size is hard-coded to be the width of the
-        //widest image and the height of the tallest image.
-        //A real program would compute this.
-        //picture.setPreferredSize(new Dimension(800, 800));
-        picture.setSize(400,300);
+        picture.setPreferredSize(new Dimension(500, 700));
+        //picture.setSize(700,600);
         
  
  
@@ -118,7 +119,7 @@ public class SelectStyleArrangement extends JPanel
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("RadioButtonDemo");
+        JFrame frame = new JFrame("Select Style Arrangement");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Create and set up the content pane.
@@ -132,8 +133,6 @@ public class SelectStyleArrangement extends JPanel
     }
  
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
