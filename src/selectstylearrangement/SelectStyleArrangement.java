@@ -8,6 +8,7 @@ package selectStyleArrangement;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import static javax.swing.JOptionPane.YES_NO_CANCEL_OPTION;
  
 public class SelectStyleArrangement extends JPanel
                              implements ActionListener {
@@ -45,11 +46,11 @@ public class SelectStyleArrangement extends JPanel
         style5Button.setActionCommand(style5String);
         
         JButton confirm = new JButton("Confirm");
-        confirm.setMnemonic(KeyEvent.VK_P);
+        confirm.setMnemonic(KeyEvent.VK_Q);
         confirm.setActionCommand("Confirm");
         
         JButton cancel = new JButton("Cancel");
-        confirm.setMnemonic(KeyEvent.VK_P);
+        confirm.setMnemonic(KeyEvent.VK_R);
         confirm.setActionCommand("Cancel");
         
  
@@ -70,13 +71,43 @@ public class SelectStyleArrangement extends JPanel
         style3Button.addActionListener(this);
         style4Button.addActionListener(this);
         style5Button.addActionListener(this);
+        
+        ActionListener confirmListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String style = "";
+                
+                ImageIcon icon = new ImageIcon();
+                
+                if (style1Button.isSelected()){
+                    style = style1Button.getText();
+                    icon = new ImageIcon("src/image/style1.jpg");
+                }
+                    
+                if (style2Button.isSelected())
+                    style = style2Button.getText();
+                if (style3Button.isSelected())
+                    style = style3Button.getText();
+                if (style4Button.isSelected())
+                    style = style4Button.getText();
+                if (style5Button.isSelected())
+                    style = style5Button.getText();
+                
+                JOptionPane.showConfirmDialog(null,"Your selection: " + style);
+                
+            }
+            
+        };
+        
+        confirm.addActionListener(confirmListener);
+        //cancel.addActionListener(cancelListener);
  
         //Set up the picture label.
         picture = new JLabel(createImageIcon("/image/"
                                              + style1String
                                              + ".jpg"));
  
-        picture.setPreferredSize(new Dimension(500, 700));
+        picture.setPreferredSize(new Dimension(500, 650));
         //picture.setSize(700,600);
         
  
@@ -88,10 +119,22 @@ public class SelectStyleArrangement extends JPanel
         radioPanel.add(style3Button);
         radioPanel.add(style4Button);
         radioPanel.add(style5Button);
- 
+        radioPanel.add(confirm);
+        radioPanel.add(cancel);
+        
         add(radioPanel, BorderLayout.LINE_START);
         add(picture, BorderLayout.CENTER);
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        
+        
+        
+        
+        
+        
+    }
+    
+    public void confirmListener(ActionEvent e){
+        
     }
  
     /** Listens to the radio buttons. */
