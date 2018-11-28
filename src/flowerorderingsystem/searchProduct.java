@@ -5,31 +5,28 @@
  */
 package flowerorderingsystem;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author wenyi
  */
-import java.awt.event.ActionListener;
-import java.sql.*;
-import javax.swing.JOptionPane;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-public class addProduct extends javax.swing.JFrame {
+public class searchProduct extends javax.swing.JFrame {
 
     Connection conn;
-    PreparedStatement stmt, stmt1;
+    PreparedStatement stmt;
     ResultSet rs;
     String host = "jdbc:derby://localhost:1527/FlowerOrderingSystem";
     String user = "nbuser";
     String pwd = "nbuser";
-    int productId = 10001;
-    
-
     /**
-     * Creates new form addProduct
+     * Creates new form searchProduct
      */
-    public addProduct() {
+    public searchProduct() {
         initComponents();
         try{
             conn = DriverManager.getConnection(host,user,pwd);
@@ -37,8 +34,6 @@ public class addProduct extends javax.swing.JFrame {
         catch(Exception ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-
-        
     }
 
     /**
@@ -50,7 +45,7 @@ public class addProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroupType = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();
         jLabelName = new javax.swing.JLabel();
         jLabelDesc = new javax.swing.JLabel();
         jLabelPrice = new javax.swing.JLabel();
@@ -59,11 +54,10 @@ public class addProduct extends javax.swing.JFrame {
         jTFDesc = new javax.swing.JTextField();
         jTFPrice = new javax.swing.JTextField();
         jTFQuantity = new javax.swing.JTextField();
-        jRBFlower = new javax.swing.JRadioButton();
-        jRBDeco = new javax.swing.JRadioButton();
-        jLabelProductType = new javax.swing.JLabel();
-        jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
+        jBtnSearch = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,30 +75,14 @@ public class addProduct extends javax.swing.JFrame {
             }
         });
 
+        jTFDesc.setEditable(false);
+
+        jTFPrice.setEditable(false);
+
+        jTFQuantity.setEditable(false);
         jTFQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFQuantityActionPerformed(evt);
-            }
-        });
-
-        buttonGroupType.add(jRBFlower);
-        jRBFlower.setSelected(true);
-        jRBFlower.setText("Single Flower");
-
-        buttonGroupType.add(jRBDeco);
-        jRBDeco.setText("Flower Bouquet");
-        jRBDeco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBDecoActionPerformed(evt);
-            }
-        });
-
-        jLabelProductType.setText(" Type: ");
-
-        jButtonAdd.setText("Add");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
             }
         });
 
@@ -112,6 +90,13 @@ public class addProduct extends javax.swing.JFrame {
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);
+            }
+        });
+
+        jBtnSearch.setText("Search");
+        jBtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSearchActionPerformed(evt);
             }
         });
 
@@ -135,22 +120,15 @@ public class addProduct extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTFPrice))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(jLabelProductType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabelQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
-                                .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jRBFlower, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(57, 57, 57)
-                                    .addComponent(jRBDeco, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 148, Short.MAX_VALUE))
-                                .addComponent(jTFQuantity)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jBtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(77, 77, 77)
+                                .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84))
+                            .addComponent(jTFQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -172,16 +150,11 @@ public class addProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(93, 93, 93)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRBFlower)
-                    .addComponent(jRBDeco)
-                    .addComponent(jLabelProductType, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                    .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,46 +174,30 @@ public class addProduct extends javax.swing.JFrame {
         jTFDesc.setText("");
         jTFPrice.setText("");
         jTFQuantity.setText("");
-        buttonGroupType.clearSelection();
-        
+
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+    private void jBtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSearchActionPerformed
         // TODO add your handling code here:
-        
         try{
-            //String productID = "P00002";
+            String sql = "SELECT ProductDescription, ProductPrice, ProductQuantity FROM PRODUCT WHERE ProductName = ? ";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, jTFName.getText());
+            rs = stmt.executeQuery();
             
-            String productName = jTFName.getText();
-            String productDescription = jTFDesc.getText();
-            double productPrice = Double.parseDouble(jTFPrice.getText());
-            int productQuantity = Integer.parseInt(jTFQuantity.getText());
-            String productType = buttonGroupType.getSelection().getActionCommand();
-            
-        
-            String insertStr = "INSERT INTO PRODUCT VALUES(?, ?, ?, ?, ?, ?)";
-            
-            stmt = conn.prepareStatement(insertStr);
-            
-            stmt.setString(1, 'P'+ String.format("%s", productId));
-            productId++;
-            stmt.setString(2, productName);
-            stmt.setString(3, productDescription);
-            stmt.setDouble(4, productPrice);
-            stmt.setInt(5, productQuantity);
-            stmt.setString(6, productType);
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Product Added Successfully");
-
-            //System.out.println(insertStr);
-        }catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }   
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jRBDecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBDecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRBDecoActionPerformed
+            while(rs.next())
+            {
+                jTFDesc.setText(rs.getString("ProductDescription"));
+                Double price = rs.getDouble("ProductPrice");
+                jTFPrice.setText(price.toString());
+                int quantity = rs.getInt("ProductQuantity");
+                jTFQuantity.setText(String.valueOf(quantity));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jBtnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,42 +216,34 @@ public class addProduct extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(searchProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addProduct().setVisible(true);
+                new searchProduct().setVisible(true);
+                
+                
             }
         });
-        
-       
-        
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupType;
-    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jBtnSearch;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JLabel jLabelDesc;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelPrice;
-    private javax.swing.JLabel jLabelProductType;
     private javax.swing.JLabel jLabelQuantity;
-    private javax.swing.JRadioButton jRBDeco;
-    private javax.swing.JRadioButton jRBFlower;
     private javax.swing.JTextField jTFDesc;
     private javax.swing.JTextField jTFName;
     private javax.swing.JTextField jTFPrice;
